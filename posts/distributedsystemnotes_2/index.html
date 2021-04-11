@@ -9,11 +9,8 @@
   <meta name="robots" content="all,follow">
   <meta name="googlebot" content="index,follow,snippet,archive">
   <meta property="og:title" content="(Notes 2) CompSci 677 Distributed System - Editting" />
-<meta property="og:description" content="Lecture 8: Lecture 9: Naming Names are used to share resources, uniquely identify entities and refer to locations
-Need to map from name to the entity it refers
-Approaches to naming Two approaches to naming:
- Hierarchical (e.g. www.cnn.com) Hashed-based  Names spaces (File Names, URL) Name Space: Hierarchical directory structure (DAG)
- Each file name is a unique path in the DAG Resolution of /home/steen/mbox a traversal of the DAG  Resolving File Names across Machines NFS mount protocol: map a remote node onto local DAG" />
+<meta property="og:description" content="Disclaimer: This is my personal class notes for CompSci 677 taught by Prof. Marco Serafini at UMass Amherst Spring 2021. All images are taken from the free version of textbook and from slides. Notes contains extracts from textbook and from slides. This notes are for me to review the materials and for you if you are looking to review some concepts.
+ Lecture 8: Persistency, Message Queueing System and Streaming Persistence and Synchronicity Persistency: messages are stored until receivers are ready." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://hoang-ho.github.io/posts/distributedsystemnotes_2/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-03-19T00:00:00&#43;00:00" />
@@ -22,11 +19,8 @@ Approaches to naming Two approaches to naming:
 
   <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="(Notes 2) CompSci 677 Distributed System - Editting"/>
-<meta name="twitter:description" content="Lecture 8: Lecture 9: Naming Names are used to share resources, uniquely identify entities and refer to locations
-Need to map from name to the entity it refers
-Approaches to naming Two approaches to naming:
- Hierarchical (e.g. www.cnn.com) Hashed-based  Names spaces (File Names, URL) Name Space: Hierarchical directory structure (DAG)
- Each file name is a unique path in the DAG Resolution of /home/steen/mbox a traversal of the DAG  Resolving File Names across Machines NFS mount protocol: map a remote node onto local DAG"/>
+<meta name="twitter:description" content="Disclaimer: This is my personal class notes for CompSci 677 taught by Prof. Marco Serafini at UMass Amherst Spring 2021. All images are taken from the free version of textbook and from slides. Notes contains extracts from textbook and from slides. This notes are for me to review the materials and for you if you are looking to review some concepts.
+ Lecture 8: Persistency, Message Queueing System and Streaming Persistence and Synchronicity Persistency: messages are stored until receivers are ready."/>
 
   
   
@@ -96,12 +90,6 @@ if (!doNotTrack) {
           </a>
         </li>
         
-        
-        <li>
-          <a class="icon" href="https://hoang-ho.github.io/posts/distributedsystemnotes_3/">
-            <i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i>
-          </a>
-        </li>
         
         <li>
           <a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');">
@@ -174,7 +162,7 @@ if (!doNotTrack) {
     </a>
   </li>
   <li>
-    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fhoang-ho.github.io%2fposts%2fdistributedsystemnotes_2%2f&name=%28Notes%202%29%20CompSci%20677%20Distributed%20System%20-%20Editting&description=Lecture%208%3a%20Lecture%209%3a%20Naming%20Names%20are%20used%20to%20share%20resources%2c%20uniquely%20identify%20entities%20and%20refer%20to%20locations%0aNeed%20to%20map%20from%20name%20to%20the%20entity%20it%20refers%0aApproaches%20to%20naming%20Two%20approaches%20to%20naming%3a%0a%20Hierarchical%20%28e.g.%20www.cnn.com%29%20Hashed-based%20%20Names%20spaces%20%28File%20Names%2c%20URL%29%20Name%20Space%3a%20Hierarchical%20directory%20structure%20%28DAG%29%0a%20Each%20file%20name%20is%20a%20unique%20path%20in%20the%20DAG%20Resolution%20of%20%2fhome%2fsteen%2fmbox%20a%20traversal%20of%20the%20DAG%20%20Resolving%20File%20Names%20across%20Machines%20NFS%20mount%20protocol%3a%20map%20a%20remote%20node%20onto%20local%20DAG">
+    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fhoang-ho.github.io%2fposts%2fdistributedsystemnotes_2%2f&name=%28Notes%202%29%20CompSci%20677%20Distributed%20System%20-%20Editting&description=Disclaimer%3a%20This%20is%20my%20personal%20class%20notes%20for%20CompSci%20677%20taught%20by%20Prof.%20Marco%20Serafini%20at%20UMass%20Amherst%20Spring%202021.%20All%20images%20are%20taken%20from%20the%20free%20version%20of%20textbook%20and%20from%20slides.%20Notes%20contains%20extracts%20from%20textbook%20and%20from%20slides.%20This%20notes%20are%20for%20me%20to%20review%20the%20materials%20and%20for%20you%20if%20you%20are%20looking%20to%20review%20some%20concepts.%0a%20Lecture%208%3a%20Persistency%2c%20Message%20Queueing%20System%20and%20Streaming%20Persistence%20and%20Synchronicity%20Persistency%3a%20messages%20are%20stored%20until%20receivers%20are%20ready.">
       <i class="fab fa-tumblr " aria-hidden="true"></i>
     </a>
   </li>
@@ -189,20 +177,18 @@ if (!doNotTrack) {
     <div id="toc">
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#approaches-to-naming">Approaches to naming</a></li>
-    <li><a href="#names-spaces-file-names-url">Names spaces (File Names, URL)</a></li>
-    <li><a href="#resolving-file-names-across-machines">Resolving File Names across Machines</a></li>
-    <li><a href="#distributed-hash-table">Distributed Hash Table</a>
+    <li><a href="#persistence-and-synchronicity">Persistence and Synchronicity</a></li>
+    <li><a href="#message-queueing-system">Message Queueing System</a></li>
+    <li><a href="#stream-oriented-communication">Stream Oriented Communication</a>
       <ul>
-        <li><a href="#consistent-hashing">Consistent Hashing</a></li>
+        <li><a href="#quality-of-service">Quality of Service</a></li>
       </ul>
     </li>
-    <li><a href="#hierarchical-naming">Hierarchical Naming</a>
-      <ul>
-        <li><a href="#domain-name-system-dns">Domain Name System (DNS)</a></li>
-        <li><a href="#dns-resolution">DNS Resolution</a></li>
-      </ul>
-    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#distributed-hash-table">Distributed Hash Table</a></li>
+    <li><a href="#hierarchical-naming---domain-name-system-dns">Hierarchical Naming - Domain Name System (DNS)</a></li>
   </ul>
 
   <ul>
@@ -244,60 +230,96 @@ if (!doNotTrack) {
 
   
     <div class="content" itemprop="articleBody">
-      <h1 id="lecture-8">Lecture 8:</h1>
+      <blockquote>
+<p>Disclaimer: This is my personal class notes for CompSci 677 taught by Prof. Marco Serafini at UMass Amherst Spring 2021. All images are taken from the free version of <a href="https://www.distributed-systems.net/index.php/books/ds3/ds3-sneak-preview/">textbook</a> and from slides. Notes contains extracts from <a href="https://www.distributed-systems.net/index.php/books/ds3/ds3-sneak-preview/">textbook</a> and from slides. This notes are for me to review the materials and for you if you are looking to review some concepts.</p>
+</blockquote>
+<h1 id="lecture-8-persistency-message-queueing-system-and-streaming">Lecture 8: Persistency, Message Queueing System and Streaming</h1>
+<h2 id="persistence-and-synchronicity">Persistence and Synchronicity</h2>
+<p><strong>Persistency:</strong> messages are stored until receivers are ready.
+Examples: email</p>
+<p><strong>Transient:</strong> messages are stored so long as sending/receiving processes are exeucting. Discard message if it can&rsquo;t be delivered
+Exampls: Transport-level communication (TCP/UDP, sockets), Network-level communication (IP)</p>
+<p><strong>Asynchronous communication:</strong> Sender resumes execution immediately after it has submitted the message. Need a local buffer at the sending host.</p>
+<p><strong>Synchronous communication:</strong> Sender blocks until receives acknowledgement from receiving host. When?</p>
+<ul>
+<li>Receipt-based: receiving host acks when maesage stored in a local buffer</li>
+<li>Delivery-based: receiving host acks when message delivered to receiving process</li>
+<li>Response-based: receiving host acks when message processed by receiving process</li>
+</ul>
+<p>Six combinations of persistence and synchronicity</p>
+<p><img src="/images/PersistentSynchrony1.png" alt="Persistence and Synchronicity Combinations"></p>
+<p>(a) Persistent asynchronous communication
+(b) Persistent synchronous communication</p>
+<p><img src="/images/PersistentSynchrony2.png" alt="Persistence and Synchronicity Combinations"></p>
+<p>(c) Transient asynchronous communication (UDP)
+(d) Receipt-based transient synchronous communication</p>
+<p><img src="/images/PersistentSynchrony3.png" alt="Persistence and Synchronicity Combinations"></p>
+<p>(e) Delivery-based transient synchronous communication (asynchronous RPC)
+(f) Response-based transient synchronous communication (RPC)</p>
+<h2 id="message-queueing-system">Message Queueing System</h2>
+<p>Supports <em>Persistent Assynchronous Communication</em>. Uses on-disk buffers to ensure persistence of messages over long periods of time. Persistence don&rsquo;t guarantees when or if the message will be delivered or read, it only ensures delivery.</p>
+<p>Example: Kafka, RabbitMQ, ActiveMQ, ZeroMQ, etc.</p>
+<p>Abstractions: get, put, poll (non-blocking), notify (also non-blocking)</p>
+<p>Queue manager interacts with application</p>
+<p>MQS routers (also called relays) provides persistence queueing.</p>
+<p>Message Brokers - application level programs that take messages from queues and transforms it so that they can be understood by destination. This is also used by publisher-subscriber systems, where a queue actually acts like mailing list - having multipler receivers and the sender doesn&rsquo;t know who the message will be delivered to.</p>
+<h2 id="stream-oriented-communication">Stream Oriented Communication</h2>
+<p><em>isochronous comunication</em></p>
+<p>Server-push based: Clients start receiving data without it being requested.</p>
+<p>Subjected to <em>Timing Constraints</em>.</p>
+<p>Playback freezes if data is not delivered on time, affected the streaming experience.</p>
+<p>If we wish to watch 30fps, a frame needs to come in every 33ms. Thus, end-to-end delay cannot be arbitrary, and must have an upper bound.</p>
+<h3 id="quality-of-service">Quality of Service</h3>
+<p>QoS is a way to encode the requirements of audio and video stream.</p>
+<p><strong>Maximum end-to-end delay bound:</strong> Need to be fixed to avoid playback glitches</p>
+<p><strong>Jitter:</strong> The fluction in the delay is jittler. We want to minimize jitter to ensure a steady data rate</p>
+<p><strong>Loss:</strong> Refers to the loss in data packets. With TCP, loss is handled using re-transmission. In video streamming, retransmission may not be an option. Late data might be as good as no data for live streaming.</p>
+<h4 id="token-bucket">Token Bucket</h4>
+<p>An OS-based method for enforcing QoS.</p>
+<p>Two parameters: R and B</p>
+<p>Tokens are added to the bucket at a constant rate R.</p>
+<p>Every time, a packet needs to be sent, it needs to grab a token that will be generated by the OS. The OS will generate tokens at a steady rate R. R is the bandwidth that needs to be guaranteed.</p>
+<p>B is depth of the bucket or the maximum number of packets that can arrive simulatanenously. If a token arrives when the bucket is full, it is discarded.</p>
+<p>We want to reduce playback glitches in video streaming. Packets may have jitter because each will arrive at a different time, even though we sent them in steady gaps. To paly at a constant fps f, we need to play the next frame in 1/f seconds. But after frame 1 arrives, frame 2 haven&rsquo;t arrived in that time difference, hence resulting in playback glitch. One way is to hold the packets in the buffers at the receiver before starting playback. Hopefully, if data continues to arrive at a good rate, our buffer will always have data and we can keep playing. To deal with packet loss, use interleaving (sending packets in an interleaving order) or Forward Error Correction (data redundancy).</p>
+<blockquote>
+<p>Q: UDP is inherently better suited for streaming. Why?</p>
+<p>A: TCP is server-pull based, so client needs to continuously contact the server to pull the data.
+But almost all streaming occurs over HTTP (and TCP) due to the universal availability of HTTP.</p>
+</blockquote>
 <h1 id="lecture-9-naming">Lecture 9: Naming</h1>
-<p>Names are used to share resources, uniquely identify entities and refer to locations</p>
-<p>Need to map from name to the entity it refers</p>
-<h2 id="approaches-to-naming">Approaches to naming</h2>
-<p>Two approaches to naming:</p>
-<ul>
-<li>Hierarchical (e.g. <a href="http://www.cnn.com">www.cnn.com</a>)</li>
-<li>Hashed-based</li>
-</ul>
-<h2 id="names-spaces-file-names-url">Names spaces (File Names, URL)</h2>
-<p>Name Space: Hierarchical directory structure (DAG)</p>
-<ul>
-<li>Each file name is a unique path in the DAG</li>
-<li>Resolution of /home/steen/mbox a traversal of the DAG</li>
-</ul>
-<h2 id="resolving-file-names-across-machines">Resolving File Names across Machines</h2>
-<p>NFS mount protocol: map a remote node onto local DAG</p>
-<p>OS maintains a mount table with the mappings</p>
-<p>What&rsquo;s the advantage of having a logical name instead of a physical name?</p>
+<p>When you type <a href="http://www.cnn.com">www.cnn.com</a> in the browser, the browser will do name/url lookup in DNS, which maps that name to the IP address of the machine, which will then be used to create a HTTP connection to that machine. This process is known as name resolution.</p>
+<p><strong>Approaches to naming:</strong> Hash-based vs Hierarchical</p>
 <h2 id="distributed-hash-table">Distributed Hash Table</h2>
-<p>Chord algorithm: a p2p system where each node store object, we use a distributed hash table to locate the object - the idea of consistent hashing</p>
-<h3 id="consistent-hashing">Consistent Hashing</h3>
-<p>Example: Storing (key, value) pair, key is the unique identifier for the value. We want to share the load of storing pairs. We want to know which node is responsible for storing that key.</p>
-<p>Map node (server) id and key id to value in [0..n) - using uniform random distribution for mapping.</p>
-<p>Key is stored in the next &ldquo;successor&rdquo; node in the ring.</p>
-<p>Why do we need to hash the server id? Flexibility of Add/Remove Nodes</p>
-<p><strong>Add/Remove Nodes</strong></p>
-<p>Node joins: take &lt;k, v&gt; pairs from successor</p>
-<p>Node leaves: give &lt;k, v&gt; pairs to successor</p>
-<p>Local changes, no global reconfiguration</p>
-<h2 id="hierarchical-naming">Hierarchical Naming</h2>
-<h3 id="domain-name-system-dns">Domain Name System (DNS)</h3>
+<p><strong>Consistent Hashing:</strong></p>
 <ul>
-<li>Naming in large distributed systems
+<li>Map node IDs to value in [0, n). Use uniform distribution for mapping (hash)</li>
+<li>Maps keys to values in [0. n)</li>
+<li>Data item with key k is stored in the smallest node with id &gt;= k</li>
+<li>Node joins: take &lt;k, v&gt; pairs from successor</li>
+<li>Node leaves: give &lt;k, v&gt; pairs to successor</li>
+</ul>
+<p><strong>Chord algorithm:</strong> a p2p system where each node store object, we use a distributed hash table to locate the object - the idea of consistent hashing.</p>
 <ul>
-<li>NFS mounts: point-to-point references, cannot scale</li>
-<li>System may be global in scope</li>
+<li>Each node keeps a finger table of size log(n).</li>
+<li>Lookup takes O(log(n)) hops</li>
 </ul>
-</li>
-<li>Name space is distributed and has three logical layers
+<h2 id="hierarchical-naming---domain-name-system-dns">Hierarchical Naming - Domain Name System (DNS)</h2>
+<p>DNS can be seen as a large distributed database that does key-value lookups. The key is machine name and the value is IP address.</p>
+<p>DNS is distributed through three logical layers:</p>
 <ul>
-<li>Global layer: highest level nodes (root and a few children)</li>
-<li>Zone: part of the name space managed by a separate server</li>
+<li>Global layer, highest level nodes and the root of hierarchy, mostly static</li>
+<li>Administrational layer: organization that are part of each of the domain</li>
+<li>Managerial layer: lowest layer, are actual nodes, where there are frequent changes</li>
 </ul>
-</li>
-</ul>
-<p>Which organization is easier to update? Depends</p>
-<h3 id="dns-resolution">DNS Resolution</h3>
-<p><strong>Recursive</strong></p>
-<p><strong>Iterative</strong></p>
-<p>Recursive vs Iterative?</p>
+<p><strong>Two ways to do name resolution in DNS:</strong> iteratively and recursively.</p>
+<p><strong>Iterative:</strong> clients iteratively look for domain name servers of each of the levels of hierarchy. Once clients reach the final machine name, clients get the IP address. Client can cache requests that have been resolved at local machine on the local name server.</p>
+<p><strong>Recursive:</strong> Clients make only one request on the root server, and the root server recursively goes down the hierarchy to lookup and return the response to the client. Name server can perform caching to lookup name server at lower level</p>
+<blockquote>
+<p>Q: Recursive vs Iterative?</p>
+<p>For long distance communiation from the client to the name server, recursive may be better. Also, it depends because we can use caching for iterative as well.</p>
+</blockquote>
 <p><strong>Home-based Approaches</strong></p>
-<p>Mobile IP: naming at network layer</p>
+<p>Nodes in the Internet are phones. This means nodes can move from location to the other, resulting in different IP Addresses. Mobile IP: attaches a home location to each node and if the node moves, it has to register the new IP address with its home server. So when you try to do a lookup or connect to that machine, you first connect to the home server and then get redirected to the IP address of where the node is.</p>
 <h1 id="lecture-10-clock-synchronization">Lecture 10: Clock Synchronization</h1>
 <h2 id="logical-clock">Logical Clock</h2>
 <p>If processes only care about event A happens before event B but don&rsquo;t care about the exact difference, then they can use logical clock. Clock synchronization does not need to be absolute. If two machines do not interact, no need to synchronize them. Processes need to agree on the order in which events occur rather than the time at which they occured.</p>
@@ -442,20 +464,18 @@ The original algorithm uses Lamport’s logical clocks (LLCs in the following). 
     <div id="toc-footer" style="display: none">
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#approaches-to-naming">Approaches to naming</a></li>
-    <li><a href="#names-spaces-file-names-url">Names spaces (File Names, URL)</a></li>
-    <li><a href="#resolving-file-names-across-machines">Resolving File Names across Machines</a></li>
-    <li><a href="#distributed-hash-table">Distributed Hash Table</a>
+    <li><a href="#persistence-and-synchronicity">Persistence and Synchronicity</a></li>
+    <li><a href="#message-queueing-system">Message Queueing System</a></li>
+    <li><a href="#stream-oriented-communication">Stream Oriented Communication</a>
       <ul>
-        <li><a href="#consistent-hashing">Consistent Hashing</a></li>
+        <li><a href="#quality-of-service">Quality of Service</a></li>
       </ul>
     </li>
-    <li><a href="#hierarchical-naming">Hierarchical Naming</a>
-      <ul>
-        <li><a href="#domain-name-system-dns">Domain Name System (DNS)</a></li>
-        <li><a href="#dns-resolution">DNS Resolution</a></li>
-      </ul>
-    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#distributed-hash-table">Distributed Hash Table</a></li>
+    <li><a href="#hierarchical-naming---domain-name-system-dns">Hierarchical Naming - Domain Name System (DNS)</a></li>
   </ul>
 
   <ul>
@@ -529,7 +549,7 @@ The original algorithm uses Lamport’s logical clocks (LLCs in the following). 
     </a>
   </li>
   <li>
-    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fhoang-ho.github.io%2fposts%2fdistributedsystemnotes_2%2f&name=%28Notes%202%29%20CompSci%20677%20Distributed%20System%20-%20Editting&description=Lecture%208%3a%20Lecture%209%3a%20Naming%20Names%20are%20used%20to%20share%20resources%2c%20uniquely%20identify%20entities%20and%20refer%20to%20locations%0aNeed%20to%20map%20from%20name%20to%20the%20entity%20it%20refers%0aApproaches%20to%20naming%20Two%20approaches%20to%20naming%3a%0a%20Hierarchical%20%28e.g.%20www.cnn.com%29%20Hashed-based%20%20Names%20spaces%20%28File%20Names%2c%20URL%29%20Name%20Space%3a%20Hierarchical%20directory%20structure%20%28DAG%29%0a%20Each%20file%20name%20is%20a%20unique%20path%20in%20the%20DAG%20Resolution%20of%20%2fhome%2fsteen%2fmbox%20a%20traversal%20of%20the%20DAG%20%20Resolving%20File%20Names%20across%20Machines%20NFS%20mount%20protocol%3a%20map%20a%20remote%20node%20onto%20local%20DAG">
+    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fhoang-ho.github.io%2fposts%2fdistributedsystemnotes_2%2f&name=%28Notes%202%29%20CompSci%20677%20Distributed%20System%20-%20Editting&description=Disclaimer%3a%20This%20is%20my%20personal%20class%20notes%20for%20CompSci%20677%20taught%20by%20Prof.%20Marco%20Serafini%20at%20UMass%20Amherst%20Spring%202021.%20All%20images%20are%20taken%20from%20the%20free%20version%20of%20textbook%20and%20from%20slides.%20Notes%20contains%20extracts%20from%20textbook%20and%20from%20slides.%20This%20notes%20are%20for%20me%20to%20review%20the%20materials%20and%20for%20you%20if%20you%20are%20looking%20to%20review%20some%20concepts.%0a%20Lecture%208%3a%20Persistency%2c%20Message%20Queueing%20System%20and%20Streaming%20Persistence%20and%20Synchronicity%20Persistency%3a%20messages%20are%20stored%20until%20receivers%20are%20ready.">
       <i class="fab fa-tumblr fa-lg" aria-hidden="true"></i>
     </a>
   </li>

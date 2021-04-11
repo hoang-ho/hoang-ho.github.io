@@ -7,7 +7,17 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Zeran Wu</copyright>
-    <lastBuildDate>Fri, 12 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://hoang-ho.github.io/categories/tech-notes-distributed-system/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 19 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://hoang-ho.github.io/categories/tech-notes-distributed-system/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>(Notes 2) CompSci 677 Distributed System - Editting</title>
+      <link>https://hoang-ho.github.io/posts/distributedsystemnotes_2/</link>
+      <pubDate>Fri, 19 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://hoang-ho.github.io/posts/distributedsystemnotes_2/</guid>
+      <description>Disclaimer: This is my personal class notes for CompSci 677 taught by Prof. Marco Serafini at UMass Amherst Spring 2021. All images are taken from the free version of textbook and from slides. Notes contains extracts from textbook and from slides. This notes are for me to review the materials and for you if you are looking to review some concepts.
+ Lecture 8: Persistency, Message Queueing System and Streaming Persistence and Synchronicity Persistency: messages are stored until receivers are ready.</description>
+    </item>
+    
     <item>
       <title>(Notes 1) CompSci 677 Distributed System - Editting</title>
       <link>https://hoang-ho.github.io/posts/distributedsystemnotes_1/</link>
