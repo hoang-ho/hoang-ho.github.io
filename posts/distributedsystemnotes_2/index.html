@@ -317,7 +317,7 @@ But almost all streaming occurs over HTTP (and TCP) due to the universal availab
 <p><strong>Recursive:</strong> Clients make only one request on the root server, and the root server recursively goes down the hierarchy to lookup and return the response to the client. Name server can perform caching to lookup name server at lower level</p>
 <blockquote>
 <p>Q: Recursive vs Iterative?</p>
-<p>For long distance communiation from the client to the name server, recursive may be better. Also, it depends because we can use caching for iterative as well.</p>
+<p>A: For long distance communiation from the client to the name server, recursive may be better. Also, it depends because we can use caching for iterative as well.</p>
 </blockquote>
 <h2 id="mobile-ip">Mobile IP</h2>
 <p>Nodes in the Internet are phones. This means nodes can move from location to the other, resulting in different IP Addresses. Mobile IP: attaches a home location to each node and if the node moves, it has to register the new IP address with its home server. So when you try to do a lookup or connect to that machine, you first connect to the home server and then get redirected to the IP address of where the node is.</p>
