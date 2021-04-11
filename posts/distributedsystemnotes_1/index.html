@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> (Notes 1) CompSci 677 Distributed System - Editting | Hoang Ho</title>
+  <meta name="description" content="I&#39;ll be a full-time Software Engineer at Apple, New York city starting on June 2021. I was SDE intern at Amazon in summer 2020 and Research intern at IBM Research in summer 2019. If you want to get in touch, feel free to contact me!">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta property="og:title" content="(Notes 1) CompSci 677 Distributed System - Editting" />
+<meta property="og:description" content="Disclaimer: This is my personal class notes for CompSci 677 taught by Prof. Marco Serafini at UMass Amherst Spring 2021. All images are taken from the free version of textbook and from slides. Notes contains extracts from textbook and from slides. This notes are for me to review the materials and for you if you are looking to review some concepts.
+ Lecture 1: High level concepts 4 important goals for a DS:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://hoang-ho.github.io/posts/distributedsystemnotes_1/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-03-12T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2021-03-12T00:00:00&#43;00:00" />
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="(Notes 1) CompSci 677 Distributed System - Editting"/>
+<meta name="twitter:description" content="Disclaimer: This is my personal class notes for CompSci 677 taught by Prof. Marco Serafini at UMass Amherst Spring 2021. All images are taken from the free version of textbook and from slides. Notes contains extracts from textbook and from slides. This notes are for me to review the materials and for you if you are looking to review some concepts.
+ Lecture 1: High level concepts 4 important goals for a DS:"/>
+
+  
+  
+    
+  
+  
+  <link rel="stylesheet" href="https://hoang-ho.github.io/css/style-white.css">
+  
+  
+  
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+  
+<link rel="icon" type="image/png" href="https://hoang-ho.github.io/images/favicon.ico" />
+
+  
+  
+  
+  
+  
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-187918729-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  
+  
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+  <div class="content index py4">
+
+  <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+        <li><a href="/">Home</a></li>
+         
+        <li><a href="/about">About</a></li>
+         
+        <li><a href="/posts">Writings</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li>
+          <a class="icon" href=" https://hoang-ho.github.io/posts/2021-01-20-review/">
+            <i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i>
+          </a>
+        </li>
+        
+        
+        <li>
+          <a class="icon" href="https://hoang-ho.github.io/posts/distributedsystemnotes_2/">
+            <i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i>
+          </a>
+        </li>
+        
+        <li>
+          <a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');">
+            <i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i>
+          </a>
+        </li>
+        <li>
+          <a class="icon" href="#">
+            <i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i>
+          </a>
+        </li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      
+      <ul>
+  
+  
+    
+  
+  
+  <li>
+    <a class="icon" href="http://www.facebook.com/sharer.php?u=https%3a%2f%2fhoang-ho.github.io%2fposts%2fdistributedsystemnotes_1%2f">
+      <i class="fab fa-facebook " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://twitter.com/share?url=https%3a%2f%2fhoang-ho.github.io%2fposts%2fdistributedsystemnotes_1%2f&text=%28Notes%201%29%20CompSci%20677%20Distributed%20System%20-%20Editting">
+      <i class="fab fa-twitter " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.linkedin.com/shareArticle?url=https%3a%2f%2fhoang-ho.github.io%2fposts%2fdistributedsystemnotes_1%2f&title=%28Notes%201%29%20CompSci%20677%20Distributed%20System%20-%20Editting">
+      <i class="fab fa-linkedin " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https%3a%2f%2fhoang-ho.github.io%2fposts%2fdistributedsystemnotes_1%2f&is_video=false&description=%28Notes%201%29%20CompSci%20677%20Distributed%20System%20-%20Editting">
+      <i class="fab fa-pinterest " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="mailto:?subject=%28Notes%201%29%20CompSci%20677%20Distributed%20System%20-%20Editting&body=Check out this article: https%3a%2f%2fhoang-ho.github.io%2fposts%2fdistributedsystemnotes_1%2f">
+      <i class="fas fa-envelope " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://getpocket.com/save?url=https%3a%2f%2fhoang-ho.github.io%2fposts%2fdistributedsystemnotes_1%2f&title=%28Notes%201%29%20CompSci%20677%20Distributed%20System%20-%20Editting">
+      <i class="fab fa-get-pocket " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://reddit.com/submit?url=https%3a%2f%2fhoang-ho.github.io%2fposts%2fdistributedsystemnotes_1%2f&title=%28Notes%201%29%20CompSci%20677%20Distributed%20System%20-%20Editting">
+      <i class="fab fa-reddit " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.stumbleupon.com/submit?url=https%3a%2f%2fhoang-ho.github.io%2fposts%2fdistributedsystemnotes_1%2f&title=%28Notes%201%29%20CompSci%20677%20Distributed%20System%20-%20Editting">
+      <i class="fab fa-stumbleupon " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://digg.com/submit?url=https%3a%2f%2fhoang-ho.github.io%2fposts%2fdistributedsystemnotes_1%2f&title=%28Notes%201%29%20CompSci%20677%20Distributed%20System%20-%20Editting">
+      <i class="fab fa-digg " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fhoang-ho.github.io%2fposts%2fdistributedsystemnotes_1%2f&name=%28Notes%201%29%20CompSci%20677%20Distributed%20System%20-%20Editting&description=Disclaimer%3a%20This%20is%20my%20personal%20class%20notes%20for%20CompSci%20677%20taught%20by%20Prof.%20Marco%20Serafini%20at%20UMass%20Amherst%20Spring%202021.%20All%20images%20are%20taken%20from%20the%20free%20version%20of%20textbook%20and%20from%20slides.%20Notes%20contains%20extracts%20from%20textbook%20and%20from%20slides.%20This%20notes%20are%20for%20me%20to%20review%20the%20materials%20and%20for%20you%20if%20you%20are%20looking%20to%20review%20some%20concepts.%0a%20Lecture%201%3a%20High%20level%20concepts%204%20important%20goals%20for%20a%20DS%3a">
+      <i class="fab fa-tumblr " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fhoang-ho.github.io%2fposts%2fdistributedsystemnotes_1%2f&t=%28Notes%201%29%20CompSci%20677%20Distributed%20System%20-%20Editting">
+      <i class="fab fa-hacker-news " aria-hidden="true"></i>
+    </a>
+  </li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#types-of-distributed-operating-system">Types of Distributed Operating System:</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#architectural-styles">Architectural Styles</a>
+      <ul>
+        <li><a href="#layered-design">Layered Design</a></li>
+        <li><a href="#object-based-style">Object-based Style</a></li>
+        <li><a href="#event-based-architecture">Event-based Architecture</a></li>
+        <li><a href="#shared-data-space">Shared-data Space</a></li>
+        <li><a href="#resource-oriented-architecture">Resource-oriented Architecture</a></li>
+      </ul>
+    </li>
+    <li><a href="#system-architectures">System Architectures</a>
+      <ul>
+        <li><a href="#client-server-architectures">Client-Server Architectures</a></li>
+        <li><a href="#decentralized-architectures-structured-p2p">Decentralized Architectures: Structured P2P</a></li>
+        <li><a href="#decentralized-architectures-unstructured-p2p-systems">Decentralized Architectures: Unstructured P2P Systems</a></li>
+        <li><a href="#decentralized-architectures-hierarchical-p2p-systems">Decentralized Architectures: Hierarchical P2P Systems</a></li>
+        <li><a href="#hybrid-centralized--p2p">Hybrid: Centralized + P2P</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#virtualization">Virtualization</a>
+      <ul>
+        <li><a href="#hypervisors">Hypervisors</a></li>
+        <li><a href="#type-1-hypervisor">Type 1 Hypervisor</a></li>
+        <li><a href="#type-2-hypervisor">Type 2 Hypervisor</a></li>
+        <li><a href="#paravirtualization">Paravirtualization</a></li>
+      </ul>
+    </li>
+    <li><a href="#containers">Containers</a></li>
+    <li><a href="#serverless">Serverless</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#server-design">Server Design</a></li>
+    <li><a href="#server-architecture">Server Architecture</a></li>
+    <li><a href="#migration">Migration</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#communication-models">Communication Models</a></li>
+    <li><a href="#remote-procedure-calls">Remote Procedure Calls</a>
+      <ul>
+        <li><a href="#parameter-passing">Parameter Passing</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#lightweight-rpc">Lightweight RPC</a></li>
+    <li><a href="#other-types-of-rpc">Other types of RPC</a></li>
+    <li><a href="#remote-method-invocation">Remote Method Invocation</a>
+      <ul>
+        <li><a href="#parameter-passing-1">Parameter Passing</a></li>
+      </ul>
+    </li>
+    <li><a href="#message-passing-interface-mpi">Message Passing Interface (MPI)</a></li>
+  </ul>
+</nav>
+    </div>
+  </span>
+</div>
+
+
+  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+    <header>
+      <h1 class="posttitle" itemprop="name headline">
+        (Notes 1) CompSci 677 Distributed System - Editting
+      </h1>
+      <div class="meta">
+        
+        <div class="postdate">
+          
+          <time datetime="2021-03-12 00:00:00 &#43;0000 UTC" itemprop="datePublished">2021-03-12</time>
+          
+        </div>
+        
+        
+      </div>
+    </header>
+
+  
+    <div class="content" itemprop="articleBody">
+      <blockquote>
+<p>Disclaimer: This is my personal class notes for CompSci 677 taught by Prof. Marco Serafini at UMass Amherst Spring 2021. All images are taken from the free version of <a href="https://www.distributed-systems.net/index.php/books/ds3/ds3-sneak-preview/">textbook</a> and from slides. Notes contains extracts from <a href="https://www.distributed-systems.net/index.php/books/ds3/ds3-sneak-preview/">textbook</a> and from slides. This notes are for me to review the materials and for you if you are looking to review some concepts.</p>
+</blockquote>
+<h1 id="lecture-1-high-level-concepts">Lecture 1: High level concepts</h1>
+<p><strong>4 important goals for a DS:</strong></p>
+<ul>
+<li>Should make the resource easily accessible</li>
+<li>Should hide the fact that resources are distributed across network</li>
+<li>Should be open</li>
+<li>Should be scalable</li>
+</ul>
+<p><strong>Transparency</strong>:</p>
+<p>DS tries to hide the fact that its processes and resources are distributed across multiple computers. It tries to make the distribution of processes and resources transparent, that is, invisible to end-users and applications.</p>
+<p>For example:</p>
+<ul>
+<li>Access: hide differences in data representation and how a resource is accessed</li>
+<li>Location: hide where a resource is located</li>
+<li>Migration: hide that a resource may move to another location</li>
+<li>Replication: hide that a resource may be replicated</li>
+<li>Concurrency: hide that a resource may be shared by several competitive users</li>
+<li>Failure: hide failure and recovery of a resource</li>
+<li>Persistence: hide whether a (software) resource is in memory or in disk</li>
+</ul>
+<p>This is akin to approach in OS: hardware is complex and OS try to hide the complexity of hardware.</p>
+<p><strong>Openness</strong>:</p>
+<p>An open DS is essentially a system that offers components that can easily be used or or integrated into other systems.</p>
+<p>Open systems make cooperation simpler:</p>
+<ul>
+<li>Remote services are described using known interfaces</li>
+<li>Coordination via known protocol</li>
+</ul>
+<p>Benefits:</p>
+<ul>
+<li>Interoperability</li>
+<li>Portability</li>
+</ul>
+<p>Extensibility:</p>
+<ul>
+<li>Open system evolve over time and should be extensible to accommodate new functionality</li>
+<li>Separate policy from mechanism</li>
+</ul>
+<p><strong>Principles for good decentralized algorithm</strong></p>
+<ul>
+<li>No machine complete state</li>
+<li>Make decision based on local information</li>
+<li>A single point of failure does not bring down the system</li>
+<li>No global clock</li>
+</ul>
+<p>Techniques:</p>
+<ul>
+<li>Asynchronous communication</li>
+<li>Distribution</li>
+<li>Caching and replication</li>
+</ul>
+<h2 id="types-of-distributed-operating-system">Types of Distributed Operating System:</h2>
+<p><strong>Multiprocessor OS</strong>: Communication via shared memory</p>
+<p><strong>DOS: Multicomputer OS</strong>: Multiple machines share the same OS, Communication via message passing</p>
+<p><strong>NOS: Networked OS</strong>: Independent OS instances, Cooperating via a client-server model</p>
+<p><strong>Middleware-based System</strong></p>
+<p>To assist the development of distributed application, distributed system are often organized to have a separate layer of software that is logically placed on top of the respective operating systems of the cluster of computers. This is called middleware. Middleware is the same to DS as what an OS is to the computer: a manager of resources offering its application to efficiently share and deploy those resources across a network. The main difference with their operating-system equivalents is that middleware services are offered in a network environent. Middleware can be viewed as a container of commonly used components and functions that no longer have to be implemented by applications separately.</p>
+<h1 id="lecture-2-architectures-for-distributed-systems">Lecture 2: Architectures for Distributed Systems</h1>
+<h2 id="architectural-styles">Architectural Styles</h2>
+<p><strong>Definition</strong></p>
+<p>Architectural Style = Components + Connectors</p>
+<p>Components: a modular unit with well-defined required and provided interfaces that are replacable within its environment</p>
+<p>Connectors: a mechanism that mediates communication, coordination, or cooperation among components.</p>
+<h3 id="layered-design">Layered Design</h3>
+<p><img src="/images/layerArchitecture.png" alt="Layered Architecture"></p>
+<p>Each layer uses previous layer to implement new functionality that is exported to the layer above. In DS, different layers reside in different servers (Multi-tier web apps). We can see this as Layer_N is the client for Layer N-1 which is the client for Layer N-2 etc. There can special situtaions when lower layer do an upcall to its higher layer. Each layer offers interfaces that can be called and hide away the actual implementation of the service.</p>
+<h3 id="object-based-style">Object-based Style</h3>
+<p>Each objects corresponds to a component. Each component correspond to a procedure. These components are connecteed via Remote Procedure Call (RPC). Interfaces offered by objects abstract away the implementation details.</p>
+<p>In case of DS, each objects reside in different servers, i.e. the caller and the callee need not to be executed on the same machine, so a procedure call take place over a network</p>
+<p>Difference with REST is that Object-based Style has language support.</p>
+<p>Advantages: Provide a natural way of encapsulating data (object&rsquo;s state) and the operations that can be performed on that data (object&rsquo;s method). Novel sequence of communications compared to layer design.</p>
+<h3 id="event-based-architecture">Event-based Architecture</h3>
+<p><img src="/images/PublisherSubscriber.png" alt="Publisher Subscriber"></p>
+<p><strong>Referential coupling</strong>: explicit referencing in communication, a process can communicate only if it knows the name or the identifier of the other process it wants to exchange information with</p>
+<p><strong>Temporal coupling</strong>: processes that are communicating need to be up and running</p>
+<p><strong>Publisher-Subscriber paradigm</strong>: processes have no explicit reference to each other</p>
+<p><strong>Event-based</strong>: referential decoupling + temporal coupling</p>
+<p>Publishers publish events. Subscribers subscribe to types of events. Once published by any publisher, event is delivered to the processes that subscribe to it. It&rsquo;s generally required that the subscriber is up-and-running at the time the event is published.</p>
+<h3 id="shared-data-space">Shared-data Space</h3>
+<p>referential decoupling + temporal decoupling</p>
+<p>Publisher publish to the shared (persistent) data space and the subscriber picks up data from the data space.</p>
+<p>Decoupled in space and time (because Publisher and Subscriber are in different servers and don&rsquo;t have to explicit reference each other, and Publishers and Subcribers don&rsquo;t have to be active at the same time). In Client-server architecture, client and server need to be active at the same time.</p>
+<h3 id="resource-oriented-architecture">Resource-oriented Architecture</h3>
+<p>Example is REST: (Representational State Transfer).</p>
+<ol>
+<li>A list of resources identified via a naming schme</li>
+<li>All servers offer the same interface (HTTP - consisting of four operations)</li>
+<li>Messages are fully described</li>
+<li>No state of the caller is kept (stateless execution), i.e., after executing an operation, components forget everything about the caller</li>
+</ol>
+<p>Example: S3 uses HTTP for API
+<a href="https://bucketname.s3.aws.com/objName">https://bucketname.s3.aws.com/objName</a>
+HTTP operations: GET/PUT/DELETE/POST</p>
+<p>Return JSON objects</p>
+<h2 id="system-architectures">System Architectures</h2>
+<h3 id="client-server-architectures">Client-Server Architectures</h3>
+<p>Centralized organization</p>
+<p>Synchronous</p>
+<p>A server is a process implementing a specific server, a client is a process that requests service from the server by sending it a request and subsequently waiting for the server&rsquo;s reply.</p>
+<p>Client-Server interfaces can be at different layers:</p>
+<ul>
+<li>User-interface level</li>
+<li>Processing level</li>
+<li>Data level</li>
+</ul>
+<p>One of the main issues was how to draw a distinction between a client and a server. Simplest organization:</p>
+<ul>
+<li>A client machine containing only the programs implementing (part of) the user-interface</li>
+<li>A server machine containing processing and data level</li>
+</ul>
+<p>Divide machines into client machines and server machines. Two-tier architecture:</p>
+<p><strong>Edge-Server Systems</strong></p>
+<p>Edge Servers: from client-server to client-proxy server</p>
+<p>These systems are deployed on the Internet where servers are placed “at the edge” of the network. This edge is formed by the boundary between enterprise networks and the actual Internet, for example, as provided by an Internet Service Provider (ISP). Likewise, where end users at home connect to the Internet through their ISP, the ISP can be considered as residing at the edge of the Internet.</p>
+<p>Content distribution networks: proxies cache web content near the edge</p>
+<p>For example, when we go on Google, the image isn&rsquo;t coming from the central Google server, but actually comes from an edge server. Content are distributed to the edge servers (Cache management lets we know where to pick up content).</p>
+<h3 id="decentralized-architectures-structured-p2p">Decentralized Architectures: Structured P2P</h3>
+<p>All servers are equal, functionalities need to carried out by every processes that constitute the distributed system. Much of the interaction between processes is symmetric: each process will act as a client and a server at the same time.</p>
+<p>Peer-to-peer architectures evolve around the question how to organize the processes in an overlay network.</p>
+<p>Structured Overlay network: a virtual network to connect these peers, peers use the overlay network to decide which peer to talk to. Each peer keep a pointer some nodes/peer. In a number of steps, it&rsquo;s guaranteed we can find the item we need. Structure Overlay network adheres to a specific, deterministic topology: a ring, a binary tree, a grid, etc. This topology is used to efficiently look up data.</p>
+<p><strong>Structured peer-to-peer system</strong> is generally based on using a semantic-free index, which means each data item that is to be maintained by the system, is uniquely associated with a key, and that this key is subsequently used as an index. To this end, it is common to use a hash function, so that we get:</p>
+<p>key(data item) = hash(data item&rsquo;s value)</p>
+<p>Chord: structured peer-to-peer system</p>
+<ul>
+<li>Use a <strong>distributed hash table</strong> to locate objects
+<ul>
+<li>Data item with key k is stored in the smallest node with id &gt;= k</li>
+</ul>
+</li>
+</ul>
+<p><img src="/images/StructuredP2P.png" alt="Distributed Hash Table"></p>
+<p>With structured peer to peer system, we can look up a data item by mean of its key.</p>
+<p><strong>Content Addressable Network (CAN)</strong></p>
+<p>CAN: d-dimensional coordinate system</p>
+<ul>
+<li>Parititioned among all nodes in the system</li>
+<li>Every data item mapped to a point</li>
+</ul>
+<p>Can have an arbitrary lookup with CAN (not only by key)</p>
+<h3 id="decentralized-architectures-unstructured-p2p-systems">Decentralized Architectures: Unstructured P2P Systems</h3>
+<ul>
+<li>Topology based on randomized algorithms
+<ul>
+<li>When a node joins it often contacts a well-known node to obtain a starting list of other peers in the system. This list can then be used to find more peers, and perhaps ignore others, and so on.</li>
+<li>Each node pick a random set of nodes and becomes their neighbors</li>
+<li>Each node/server need to keep information about its neighbors, just randomly visit a node</li>
+<li>Choice of degree can impact the network</li>
+</ul>
+</li>
+<li>Can be used for file sharing</li>
+<li>Simple but can take some time to find item in the system (won&rsquo;t scale very well) because unlike structured peer-to-peer systems, looking up data cannot follow a predetermined route when lists of neighbors are constructed in an ad hoc fashion. We need to resort to searching for data</li>
+<li>Unstructured P2P do not scale</li>
+</ul>
+<p><strong>Searching for data</strong></p>
+<ul>
+<li>Flooding: an issuing node u simply passes a request for a data item to all its neighbors. If v has the required data, it responses directly or send it back to u. If v does not have the requested data, it forwards the request to all of its own neighbors. Flooding is very expensive, and thus, a request often has an associated time-to-live or TTL value, giving the maximum number of hops a request is allowed to be forwarded.</li>
+<li>Random Walk: an issuing node u can simply try to find a data item by asking a randomly chosen neighbor, say v. If v does not have the data, it forwards the request to one of its randomly chosen neighbors, and so on. A random walk imposes much less network traffic but may take much longer for searching data. To decrease the waiting time, an issuer can simply start n random walks simultaneously</li>
+</ul>
+<p>Variant:</p>
+<ul>
+<li>Can build structured network using unstructured overlay</li>
+<li>The bottom layer is a random overlay and the top layer is a structured overlay</li>
+</ul>
+<h3 id="decentralized-architectures-hierarchical-p2p-systems">Decentralized Architectures: Hierarchical P2P Systems</h3>
+<p>SuperPeers: Some nodes becomes &ldquo;distinguished&rdquo; and take on the responsibility for coordination.</p>
+<p>Every regular peers is connected as a client to a SuperPeer. All communications from and to a regular peer proceed through that peer&rsquo;s associated super peer. Have an overlay network on the set of SuperPeers. SuperPeers are expected to be long-lived processes with high availability.</p>
+<h3 id="hybrid-centralized--p2p">Hybrid: Centralized + P2P</h3>
+<p>Example: BitTorrent</p>
+<ul>
+<li>Collaborative P2P downloads, client-server for lookups</li>
+<li>Meta data is kept by the centralized node, the actual data is kept by the nodes
+<ul>
+<li>To download the file, user access a global directory, such directory contains reference to torent files</li>
+<li>A torent file contain a link to a tracker, which is server keeps account of active nodes that have the requested files</li>
+<li>Download a chunk of files from other users until the downloaded chunks can be assembled together yielding the complete file</li>
+</ul>
+</li>
+</ul>
+<h1 id="lecture-3-background-thread-and-process">Lecture 3: Background: Thread and Process</h1>
+<h1 id="lecture-4-virtualization-container-and-serverless">Lecture 4: Virtualization, Container and Serverless</h1>
+<h2 id="virtualization">Virtualization</h2>
+<ul>
+<li>Emulation
+<ul>
+<li>Virtual Machine emulates/simulates complete hardware</li>
+</ul>
+</li>
+<li>Full/Native Virtualization
+<ul>
+<li>VM simulates just some aspects of hardware/OS</li>
+<li>Example: VMWare, VirtualBox</li>
+</ul>
+</li>
+</ul>
+<h3 id="hypervisors">Hypervisors</h3>
+<ul>
+<li>Hypervisors/VMM: Layer implementing virtualization</li>
+<li>Resource management, isolation, scheduling</li>
+<li>Two types of hypervisors:
+<ul>
+<li>Type 1: hypervisors runs on &ldquo;bare mental:</li>
+<li>Type 2: hypervisors runs on a host OS
+<ul>
+<li>Guest OS runs inside hypervisors</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Both hypervisors act like real hardware, but hypervisors only has permission for resource management, and access isolation</li>
+</ul>
+<h3 id="type-1-hypervisor">Type 1 Hypervisor</h3>
+<ul>
+<li>Hypervisor is the real kernel, run on kernel model</li>
+<li>The guest OS is running on user mode, (while it thinks it runs on Kernel mode)</li>
+<li>If guest OS performs the priviledge instructions, trap and switch control to the real kernel mode</li>
+</ul>
+<blockquote>
+<p>Q: Is VirtualBox type 1 or type 2?</p>
+<p>A: Type 2</p>
+</blockquote>
+<h3 id="type-2-hypervisor">Type 2 Hypervisor</h3>
+<ul>
+<li>Run on user mode</li>
+<li>VMWare for example</li>
+<li>When the guest VM loads a program, Virtual Machine Manager scan its blocks and replaces privileged instructions with VMM-lelvel code on the fly</li>
+<li>The binary translation is to have the guest OS calls the hypervisors</li>
+<li>VMM level code either emulates privleged instructions or performs system calls</li>
+<li>Keep a cache of modified block (so as to not scan over and over again)</li>
+</ul>
+<h3 id="paravirtualization">Paravirtualization</h3>
+<ul>
+<li>Modify OS kernel code</li>
+<li>Run in kernel mode</li>
+<li>Replace all privileged instruction calls with hypercalls</li>
+<li>OS behaves like a user program making system calls and hypervisor executes the priviledge operations invoked by hypercall</li>
+</ul>
+<h2 id="containers">Containers</h2>
+<p>Only one OS, so a little less isolation, because all containers share the samne kernel. Faster to provision because OS is already up. Containers have the illusion that they run in isolation.</p>
+<h2 id="serverless">Serverless</h2>
+<p>Distributed platform runs functions inside a container:</p>
+<ul>
+<li>Single threaded code</li>
+<li>Stateless: data must be fetched from external storage</li>
+</ul>
+<h1 id="lecture-5-server-design">Lecture 5: Server Design</h1>
+<h2 id="server-design">Server Design</h2>
+<p>Iterative vs Concurrent Server</p>
+<p>To locate a server endpoint: use a directory service where the server can register itself</p>
+<p>Each tiered level may be replicated and load is balanced across the clusters through a dispatcher which assigns each incoming request to a server in the cluster.</p>
+<p>There are two methods for request assignment in clusters: Round Robin, Session Based (requests from a user session are routed to the same session to maintain state about that session)</p>
+<p>Client establishes a TCP connection with the Switch node that is the front node. Switch will then make a TCP connection with an actual server and will forward client&rsquo;s request to that server. Switch acts as an intermediate node that will basically receive requests from the client and will relay them to an actual server. When server sends the reply, it sends the reply with IP address of the Switch, so the client doesn&rsquo;t know that the response actually came from a third machine.</p>
+<h2 id="server-architecture">Server Architecture</h2>
+<p>Four types of architecture:</p>
+<ul>
+<li>Sequential: Single thread execution, handle one request at a time</li>
+<li>Event-Based: Single thread execution, able to handle interrupt. Using asynchronous communication to serve multiple requests at a time</li>
+<li>Thread-based: Multi-threaded execution, one thread per request</li>
+<li>Process-based: Multi-process execution, one process per request</li>
+</ul>
+<blockquote>
+<p>Question: Which one is more resource efficient?</p>
+<p>A: If have one core, then event-based</p>
+<p>If have multi-core, then thread-based</p>
+<p>Event-based can lead to convoy effect (phenomenon associated with the First Come First Serve (FCFS) algorithm, in which the whole Operating System slows down due to few slow processes.) if computation for one request takes too long to run.</p>
+<p>Can combine thread-based and event-based</p>
+</blockquote>
+<p><strong>Scalability</strong></p>
+<ul>
+<li>Scale up</li>
+<li>Scale out</li>
+<li>Ship code instead of data (Rather than you sending data to the computation for execution, the computation will come where
+the data is present and will then execute. Example: Search Engine)</li>
+<li>Cache</li>
+</ul>
+<h2 id="migration">Migration</h2>
+<p>Example of &ldquo;Ship code instead of data&rdquo;</p>
+<ul>
+<li>
+<p>Process migration: Also known as strong mobility, this includes the migration of all the components of a process i.e. code segment, resource segments and execution segment. An active process (an already executing program) on a machine is suspended, its resources like memory contents and register contents are migrated over to the new machine and then the process execution is restarted.</p>
+</li>
+<li>
+<p>Code migration: Also known as weak mobility. In this model only the code is migrated and the process is restarted from the initial state on the destination machine. Example: Docker</p>
+</li>
+</ul>
+<h1 id="lecture-6-communications-in-distributed-system">Lecture 6: Communications in Distributed System</h1>
+<h2 id="communication-models">Communication Models</h2>
+<p><strong>Client pull architecture</strong>: Clients pull data from servers by sending requests.</p>
+<p>Pros: Server need not maintain state information(stateless), more resilient to failures or easy failure handling</p>
+<p>Cons: Scalability problem (one reason is the overhead cause by lot of messages being exchanged; every response requires a request to go the server ), fault tolerance.</p>
+<p><strong>Server push architecture</strong>: Servers push data to clients.</p>
+<p>Pros: Relatively more scalable (one reason is because the client doesn&rsquo;t have to continuously poll the server for fresh data and the server automatically pushes when new data arrives).</p>
+<p>Cons: Servers have to maintain client state information, less resilient to failures.</p>
+<blockquote>
+<p>Q: Which one to choose depends on when/how-often to push and pull?</p>
+<p>A: When servers and client interact frequently: server-push (because more scalable). Example: Streamming Service</p>
+<p>When servers and client interact now and then: client-pull</p>
+</blockquote>
+<h2 id="remote-procedure-calls">Remote Procedure Calls</h2>
+<p><strong>Goal</strong>: Make distributed computing look like centralized computing. Allow remote services to be called as procedures</p>
+<p>When a process in machine A calls a procedure in machine B, the calling process in A is suspended, and execution of the called procedure takes place on B. Information can be transported from the caller to the callee in the parameters and can come back in the procedure result. No message passing at all is visible to the programmer.</p>
+<h3 id="parameter-passing">Parameter Passing</h3>
+<ul>
+<li>
+<p>Local procedure parameter passing: Call-by-value, Call-by-reference</p>
+</li>
+<li>
+<p>RPC only supports call-by-value:</p>
+<ul>
+<li>Stubs takes care of packing arguments in neutral format and sending message
+<ul>
+<li>Client makes a local procedures call to client stub</li>
+<li>Stub - proxies transform local call to remote call</li>
+</ul>
+</li>
+<li>Flattening - marshalling, copying all the parameters needed to run to the server, making parameter passing look transparent</li>
+<li>Different machines have different data format. Solution: Use External Data Representation</li>
+</ul>
+</li>
+</ul>
+<p><strong>Case Study: SUNRPC</strong></p>
+<h1 id="lecture-7">Lecture 7</h1>
+<h2 id="lightweight-rpc">Lightweight RPC</h2>
+<p>We don&rsquo;t need to create RPC to send request to another process on the same physical server -&gt; lightweight RPC. The optimization is to construct the message as a buffer and simply write to the shared memory region:</p>
+<ul>
+<li>No need for marshalling</li>
+<li>Get rid of explicit message passing completely. Rather shared memory is used as a way of communication</li>
+<li>Stub uses run-time flag to decide whether to use TCP/IP or shared memory</li>
+<li>No XDR needed</li>
+</ul>
+<h2 id="other-types-of-rpc">Other types of RPC</h2>
+<p><strong>Asynchronous RPC:</strong></p>
+<ul>
+<li>Client is not blocked after making an RPC call: it sends the request, waits for an acknowledgement then resumes its own execution</li>
+<li>Request reply behavior often not needed</li>
+<li>Server can reply as soon as request is received and execute procedure later</li>
+</ul>
+<p><strong>Deferred Synchronous RPC:</strong></p>
+<ul>
+<li>Same as Asynchronous RPC, but the server returns the result by via an asynchronous RPC.</li>
+<li>The difference with this and asynchronous RPC is that the results is sent back via asynchronous RPC, so the client just need to send an acks to the server after receiving the results.</li>
+</ul>
+<p><strong>One way RPC:</strong></p>
+<ul>
+<li>Same as Asynchronous RPC, different in that client doesn&rsquo;t even wait for an ACK from server</li>
+<li>Limitation: doesn&rsquo;t guarantee reliability</li>
+</ul>
+<h2 id="remote-method-invocation">Remote Method Invocation</h2>
+<p>RMIs are RPCs in Object Oriented Programming Mode, i.e., they can call the methods of the objects (instances of a class) which are residing on a remote machine.</p>
+<p>RMIs support system-wide object references, i.e., parameters can be passed as object references here, which is not possible in normal RPC.</p>
+<blockquote>
+<p>Q: What is binding?</p>
+<p>A: A Process in which a client links to server that have implementation for the process.</p>
+</blockquote>
+<p>When a client binds to a distributed object, the client stub (proxy) loads the interfaces into the client address space.</p>
+<p><img src="/images/RMI_Binding.png" alt="Binding"></p>
+<p>(a) Implicit binding uses just global references, and it is figured out on run-time that it is a remote call (by the client stub)</p>
+<p>(b) Explicit Binding uses both global and local reference. Client explicitly calls a bind function before invoking the methods.</p>
+<h3 id="parameter-passing-1">Parameter Passing</h3>
+<p>Passing a reference to an object means passing a pointer to its memory address over the network. Local objects are passed by value, and remote objects are passed by reference.</p>
+<p>Java supports monitors, which are synchronized objects.</p>
+<p>For synchronization, lock has to be applied on object which is distributed amongst the clients. How to implement distributed lock?</p>
+<ul>
+<li>Lock at the server: clients will make requests to the server, where they will contend for the lock and will be blocked. Problem: what if the client crashes while blocked?</li>
+<li>Lock at the client (proxy) collectively: need some protocol which decides which client will get the lock and the rest will be blocked (waiting for the lock).</li>
+<li>Java uses proxies for locking: No protection for simultaneous access from different clients, applications need to implement distributed locking.</li>
+</ul>
+<blockquote>
+<p>Reference: <a href="https://docs.oracle.com/javase/7/docs/technotes/guides/rmi/hello/hello-world.html">Hello World Java RMI</a></p>
+</blockquote>
+<blockquote>
+<p>Reference: <a href="https://stackoverflow.com/questions/3507253/java-rmi-and-synchronized-methods">Concurrency in Java RMI</a></p>
+</blockquote>
+<h2 id="message-passing-interface-mpi">Message Passing Interface (MPI)</h2>
+<p>MPI is a higher level programming abstraction than sockets.</p>
+<p><strong>Question:</strong> Suppose that you want to implement a client-server system. There are multiple clients and one server. The server is stateful and the state is updated based on the requests from the clients. A simple example would be a server that stores a counter that is incremented every time any client sends a request. Consider the RPC and RMI mechanisms. Assume that remote procedures/objects cannot to store state outside of the procedure/object itself (for example, they do not have access to the file system of the server).</p>
+<p>(a) Can you use RPC to implement the system? Why or why not?</p>
+<p>(b) Can you use RMI to implement the system? Why or why not?</p>
+<p><strong>Answer:</strong></p>
+<p>(a) No. Regular RPCs cannot be used to implement stateful servers without access to the file system. Remote procedures cannot use global variables so they can only operate on constants and the input parameters provided by the clients. The server will not be able to keep a counter across requests from different clients.</p>
+<p>(b) Yes. RMI can be used to implement the system. Client can invoke on the remote object to increment the counter.</p>
+
+    </div>
+  </article>
+
+  
+  
+
+
+
+
+
+  <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about">About</a></li>
+         
+          <li><a href="/posts">Writings</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#types-of-distributed-operating-system">Types of Distributed Operating System:</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#architectural-styles">Architectural Styles</a>
+      <ul>
+        <li><a href="#layered-design">Layered Design</a></li>
+        <li><a href="#object-based-style">Object-based Style</a></li>
+        <li><a href="#event-based-architecture">Event-based Architecture</a></li>
+        <li><a href="#shared-data-space">Shared-data Space</a></li>
+        <li><a href="#resource-oriented-architecture">Resource-oriented Architecture</a></li>
+      </ul>
+    </li>
+    <li><a href="#system-architectures">System Architectures</a>
+      <ul>
+        <li><a href="#client-server-architectures">Client-Server Architectures</a></li>
+        <li><a href="#decentralized-architectures-structured-p2p">Decentralized Architectures: Structured P2P</a></li>
+        <li><a href="#decentralized-architectures-unstructured-p2p-systems">Decentralized Architectures: Unstructured P2P Systems</a></li>
+        <li><a href="#decentralized-architectures-hierarchical-p2p-systems">Decentralized Architectures: Hierarchical P2P Systems</a></li>
+        <li><a href="#hybrid-centralized--p2p">Hybrid: Centralized + P2P</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#virtualization">Virtualization</a>
+      <ul>
+        <li><a href="#hypervisors">Hypervisors</a></li>
+        <li><a href="#type-1-hypervisor">Type 1 Hypervisor</a></li>
+        <li><a href="#type-2-hypervisor">Type 2 Hypervisor</a></li>
+        <li><a href="#paravirtualization">Paravirtualization</a></li>
+      </ul>
+    </li>
+    <li><a href="#containers">Containers</a></li>
+    <li><a href="#serverless">Serverless</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#server-design">Server Design</a></li>
+    <li><a href="#server-architecture">Server Architecture</a></li>
+    <li><a href="#migration">Migration</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#communication-models">Communication Models</a></li>
+    <li><a href="#remote-procedure-calls">Remote Procedure Calls</a>
+      <ul>
+        <li><a href="#parameter-passing">Parameter Passing</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#lightweight-rpc">Lightweight RPC</a></li>
+    <li><a href="#other-types-of-rpc">Other types of RPC</a></li>
+    <li><a href="#remote-method-invocation">Remote Method Invocation</a>
+      <ul>
+        <li><a href="#parameter-passing-1">Parameter Passing</a></li>
+      </ul>
+    </li>
+    <li><a href="#message-passing-interface-mpi">Message Passing Interface (MPI)</a></li>
+  </ul>
+</nav>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      
+      <ul>
+  
+  
+    
+  
+  
+  <li>
+    <a class="icon" href="http://www.facebook.com/sharer.php?u=https%3a%2f%2fhoang-ho.github.io%2fposts%2fdistributedsystemnotes_1%2f">
+      <i class="fab fa-facebook fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://twitter.com/share?url=https%3a%2f%2fhoang-ho.github.io%2fposts%2fdistributedsystemnotes_1%2f&text=%28Notes%201%29%20CompSci%20677%20Distributed%20System%20-%20Editting">
+      <i class="fab fa-twitter fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.linkedin.com/shareArticle?url=https%3a%2f%2fhoang-ho.github.io%2fposts%2fdistributedsystemnotes_1%2f&title=%28Notes%201%29%20CompSci%20677%20Distributed%20System%20-%20Editting">
+      <i class="fab fa-linkedin fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https%3a%2f%2fhoang-ho.github.io%2fposts%2fdistributedsystemnotes_1%2f&is_video=false&description=%28Notes%201%29%20CompSci%20677%20Distributed%20System%20-%20Editting">
+      <i class="fab fa-pinterest fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="mailto:?subject=%28Notes%201%29%20CompSci%20677%20Distributed%20System%20-%20Editting&body=Check out this article: https%3a%2f%2fhoang-ho.github.io%2fposts%2fdistributedsystemnotes_1%2f">
+      <i class="fas fa-envelope fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://getpocket.com/save?url=https%3a%2f%2fhoang-ho.github.io%2fposts%2fdistributedsystemnotes_1%2f&title=%28Notes%201%29%20CompSci%20677%20Distributed%20System%20-%20Editting">
+      <i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://reddit.com/submit?url=https%3a%2f%2fhoang-ho.github.io%2fposts%2fdistributedsystemnotes_1%2f&title=%28Notes%201%29%20CompSci%20677%20Distributed%20System%20-%20Editting">
+      <i class="fab fa-reddit fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.stumbleupon.com/submit?url=https%3a%2f%2fhoang-ho.github.io%2fposts%2fdistributedsystemnotes_1%2f&title=%28Notes%201%29%20CompSci%20677%20Distributed%20System%20-%20Editting">
+      <i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://digg.com/submit?url=https%3a%2f%2fhoang-ho.github.io%2fposts%2fdistributedsystemnotes_1%2f&title=%28Notes%201%29%20CompSci%20677%20Distributed%20System%20-%20Editting">
+      <i class="fab fa-digg fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fhoang-ho.github.io%2fposts%2fdistributedsystemnotes_1%2f&name=%28Notes%201%29%20CompSci%20677%20Distributed%20System%20-%20Editting&description=Disclaimer%3a%20This%20is%20my%20personal%20class%20notes%20for%20CompSci%20677%20taught%20by%20Prof.%20Marco%20Serafini%20at%20UMass%20Amherst%20Spring%202021.%20All%20images%20are%20taken%20from%20the%20free%20version%20of%20textbook%20and%20from%20slides.%20Notes%20contains%20extracts%20from%20textbook%20and%20from%20slides.%20This%20notes%20are%20for%20me%20to%20review%20the%20materials%20and%20for%20you%20if%20you%20are%20looking%20to%20review%20some%20concepts.%0a%20Lecture%201%3a%20High%20level%20concepts%204%20important%20goals%20for%20a%20DS%3a">
+      <i class="fab fa-tumblr fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fhoang-ho.github.io%2fposts%2fdistributedsystemnotes_1%2f&t=%28Notes%201%29%20CompSci%20677%20Distributed%20System%20-%20Editting">
+      <i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;">
+          <i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;">
+          <i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;">
+          <i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');">
+          <i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+
+  <footer id="footer">
+  <div class="footer-left">
+    Copyright  &copy; 2021  Zeran Wu 
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+        <li><a href="/">Home</a></li>
+         
+        <li><a href="/about">About</a></li>
+         
+        <li><a href="/posts">Writings</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+
+  </div>
+</body>
+
+<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<script src=/lib/jquery/jquery.min.js></script>
+<script src=/js/main.js></script>
+
+
+  
+
+
+<script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']]
+    },
+    svg: {
+      fontCache: 'global'
+    }
+  };
+</script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+
+</html>

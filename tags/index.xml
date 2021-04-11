@@ -6,10 +6,6 @@
     <description>Recent content in Tags on Hoang Ho</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <copyright>Hoang Ho</copyright>
-    
-	<atom:link href="https://hoang-ho.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <copyright>Zeran Wu</copyright><atom:link href="https://hoang-ho.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

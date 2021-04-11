@@ -1,44 +1,40 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
   <url>
+    <loc>https://hoang-ho.github.io/posts/distributedsystemnotes_3/</loc>
+    <lastmod>2021-04-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://hoang-ho.github.io/categories/</loc>
+    <lastmod>2021-04-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://hoang-ho.github.io/</loc>
+    <lastmod>2021-04-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://hoang-ho.github.io/posts/</loc>
+    <lastmod>2021-04-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://hoang-ho.github.io/categories/tech-notes-distributed-system/</loc>
+    <lastmod>2021-04-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://hoang-ho.github.io/posts/distributedsystemnotes_2/</loc>
+    <lastmod>2021-03-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://hoang-ho.github.io/posts/distributedsystemnotes_1/</loc>
+    <lastmod>2021-03-12T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://hoang-ho.github.io/posts/2021-01-20-review/</loc>
     <lastmod>2021-01-20T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://hoang-ho.github.io/categories/</loc>
-    <lastmod>2021-01-20T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://hoang-ho.github.io/categories/life/</loc>
     <lastmod>2021-01-20T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://hoang-ho.github.io/posts/</loc>
-    <lastmod>2021-01-20T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://hoang-ho.github.io/about/</loc>
     <lastmod>2021-01-13T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://hoang-ho.github.io/posts/z/</loc>
     <lastmod>2021-01-13T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://hoang-ho.github.io/</loc>
-    <lastmod>2021-01-13T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://hoang-ho.github.io/tags/</loc>
   </url>
-  
 </urlset>
