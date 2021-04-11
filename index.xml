@@ -7,35 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Zeran Wu</copyright>
-    <lastBuildDate>Thu, 01 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://hoang-ho.github.io/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>(Notes 3) CompSci 677 Distributed System - Editting</title>
-      <link>https://hoang-ho.github.io/posts/distributedsystemnotes_3/</link>
-      <pubDate>Thu, 01 Apr 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://hoang-ho.github.io/posts/distributedsystemnotes_3/</guid>
-      <description>Lecture 13: Transaction ACID properties
-Atomicity: all operations succeed or none of them succeeds
-Consistent
-Isolation: Transaction executes as if it is the only transaction in the system. Ensures that the concurrent execution of transactions results in a system state that would be obtained if transactions were executed sequentially (serializability).
-Durability: Changes are permanent once transaction completes (commits to disk)
-Example:
-ABORT_TRANSACTION will also abort the previous reservation because of atomicity</description>
-    </item>
-    
-    <item>
-      <title>(Notes 2) CompSci 677 Distributed System - Editting</title>
-      <link>https://hoang-ho.github.io/posts/distributedsystemnotes_2/</link>
-      <pubDate>Fri, 19 Mar 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://hoang-ho.github.io/posts/distributedsystemnotes_2/</guid>
-      <description>Lecture 8: Lecture 9: Naming Names are used to share resources, uniquely identify entities and refer to locations
-Need to map from name to the entity it refers
-Approaches to naming Two approaches to naming:
- Hierarchical (e.g. www.cnn.com) Hashed-based  Names spaces (File Names, URL) Name Space: Hierarchical directory structure (DAG)
- Each file name is a unique path in the DAG Resolution of /home/steen/mbox a traversal of the DAG  Resolving File Names across Machines NFS mount protocol: map a remote node onto local DAG</description>
-    </item>
-    
+    <lastBuildDate>Fri, 12 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://hoang-ho.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>(Notes 1) CompSci 677 Distributed System - Editting</title>
       <link>https://hoang-ho.github.io/posts/distributedsystemnotes_1/</link>
