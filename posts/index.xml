@@ -14,7 +14,7 @@
       <pubDate>Fri, 19 Mar 2021 00:00:00 +0000</pubDate>
       
       <guid>https://hoang-ho.github.io/posts/distributedsystemnotes_2/</guid>
-      <description>Disclaimer: This is my personal class notes for CompSci 677 taught by Prof. Marco Serafini at UMass Amherst Spring 2021. All images are taken from the free version of textbook and from slides. Notes contains extracts from textbook and from slides. This notes are for me to review the materials and for you if you are looking to review some concepts.
+      <description>Disclaimer: This is my personal class notes for Distributed Operating System course taught at UMass Amherst. All images are taken from the free version of textbook and from slides. Notes contains extracts from textbook and from slides. This notes are for me to review the materials and for you if you are looking to review some concepts.
  Lecture 8: Persistency, Message Queueing System and Streaming Persistence and Synchronicity Persistency: messages are stored until receivers are ready.</description>
     </item>
     
@@ -24,7 +24,7 @@
       <pubDate>Fri, 12 Mar 2021 00:00:00 +0000</pubDate>
       
       <guid>https://hoang-ho.github.io/posts/distributedsystemnotes_1/</guid>
-      <description>Disclaimer: This is my personal class notes for CompSci 677 taught by Prof. Marco Serafini at UMass Amherst Spring 2021. All images are taken from the free version of textbook and from slides. Notes contains extracts from textbook and from slides. This notes are for me to review the materials and for you if you are looking to review some concepts.
+      <description>Disclaimer: This is my personal class notes for Distributed Operating System course taught at UMass Amherst. All images are taken from the free version of textbook and from slides. Notes contains extracts from textbook and from slides. This notes are for me to review the materials and for you if you are looking to review some concepts.
  Lecture 1: High level concepts 4 important goals for a DS:</description>
     </item>
     
