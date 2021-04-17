@@ -10,17 +10,17 @@
   <meta name="googlebot" content="index,follow,snippet,archive">
   <meta property="og:title" content="(Notes 2) CompSci 677 Distributed System - Editting" />
 <meta property="og:description" content="Disclaimer: This is my personal class notes for Distributed Operating System course taught at UMass Amherst. All images are taken from the free version of textbook and from slides. Notes contains extracts from textbook and from slides. This notes are for me to review the materials and for you if you are looking to review some concepts.
- Lecture 8: Persistency, Message Queueing System and Streaming Persistence and Synchronicity Persistency: messages are stored until receivers are ready." />
+ Lecture 7 Remote Method Invocation Lightweight RPC We don&rsquo;t need to create RPC to send request to another process on the same physical server -&gt; lightweight RPC." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://hoang-ho.github.io/posts/distributedsystemnotes_2/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2021-03-19T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2021-03-19T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2021-03-26T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2021-03-26T00:00:00&#43;00:00" />
 
 
   <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="(Notes 2) CompSci 677 Distributed System - Editting"/>
 <meta name="twitter:description" content="Disclaimer: This is my personal class notes for Distributed Operating System course taught at UMass Amherst. All images are taken from the free version of textbook and from slides. Notes contains extracts from textbook and from slides. This notes are for me to review the materials and for you if you are looking to review some concepts.
- Lecture 8: Persistency, Message Queueing System and Streaming Persistence and Synchronicity Persistency: messages are stored until receivers are ready."/>
+ Lecture 7 Remote Method Invocation Lightweight RPC We don&rsquo;t need to create RPC to send request to another process on the same physical server -&gt; lightweight RPC."/>
 
   
   
@@ -90,6 +90,12 @@ if (!doNotTrack) {
           </a>
         </li>
         
+        
+        <li>
+          <a class="icon" href="https://hoang-ho.github.io/posts/distributedsystemnotes_3/">
+            <i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i>
+          </a>
+        </li>
         
         <li>
           <a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');">
@@ -162,7 +168,7 @@ if (!doNotTrack) {
     </a>
   </li>
   <li>
-    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fhoang-ho.github.io%2fposts%2fdistributedsystemnotes_2%2f&name=%28Notes%202%29%20CompSci%20677%20Distributed%20System%20-%20Editting&description=Disclaimer%3a%20This%20is%20my%20personal%20class%20notes%20for%20Distributed%20Operating%20System%20course%20taught%20at%20UMass%20Amherst.%20All%20images%20are%20taken%20from%20the%20free%20version%20of%20textbook%20and%20from%20slides.%20Notes%20contains%20extracts%20from%20textbook%20and%20from%20slides.%20This%20notes%20are%20for%20me%20to%20review%20the%20materials%20and%20for%20you%20if%20you%20are%20looking%20to%20review%20some%20concepts.%0a%20Lecture%208%3a%20Persistency%2c%20Message%20Queueing%20System%20and%20Streaming%20Persistence%20and%20Synchronicity%20Persistency%3a%20messages%20are%20stored%20until%20receivers%20are%20ready.">
+    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fhoang-ho.github.io%2fposts%2fdistributedsystemnotes_2%2f&name=%28Notes%202%29%20CompSci%20677%20Distributed%20System%20-%20Editting&description=Disclaimer%3a%20This%20is%20my%20personal%20class%20notes%20for%20Distributed%20Operating%20System%20course%20taught%20at%20UMass%20Amherst.%20All%20images%20are%20taken%20from%20the%20free%20version%20of%20textbook%20and%20from%20slides.%20Notes%20contains%20extracts%20from%20textbook%20and%20from%20slides.%20This%20notes%20are%20for%20me%20to%20review%20the%20materials%20and%20for%20you%20if%20you%20are%20looking%20to%20review%20some%20concepts.%0a%20Lecture%207%20Remote%20Method%20Invocation%20Lightweight%20RPC%20We%20don%26rsquo%3bt%20need%20to%20create%20RPC%20to%20send%20request%20to%20another%20process%20on%20the%20same%20physical%20server%20-%26gt%3b%20lightweight%20RPC.">
       <i class="fab fa-tumblr " aria-hidden="true"></i>
     </a>
   </li>
@@ -176,6 +182,17 @@ if (!doNotTrack) {
     </div>
     <div id="toc">
       <nav id="TableOfContents">
+  <ul>
+    <li><a href="#lightweight-rpc">Lightweight RPC</a></li>
+    <li><a href="#other-types-of-rpc">Other types of RPC</a></li>
+    <li><a href="#remote-method-invocation">Remote Method Invocation</a>
+      <ul>
+        <li><a href="#parameter-passing">Parameter Passing</a></li>
+      </ul>
+    </li>
+    <li><a href="#message-passing-interface-mpi">Message Passing Interface (MPI)</a></li>
+  </ul>
+
   <ul>
     <li><a href="#persistence-and-synchronicity">Persistence and Synchronicity</a></li>
     <li><a href="#message-queueing-system">Message Queueing System</a></li>
@@ -221,7 +238,7 @@ if (!doNotTrack) {
         
         <div class="postdate">
           
-          <time datetime="2021-03-19 00:00:00 &#43;0000 UTC" itemprop="datePublished">2021-03-19</time>
+          <time datetime="2021-03-26 00:00:00 &#43;0000 UTC" itemprop="datePublished">2021-03-26</time>
           
         </div>
         
@@ -234,6 +251,66 @@ if (!doNotTrack) {
       <blockquote>
 <p>Disclaimer: This is my personal class notes for Distributed Operating System course taught at UMass Amherst. All images are taken from the free version of <a href="https://www.distributed-systems.net/index.php/books/ds3/ds3-sneak-preview/">textbook</a> and from slides. Notes contains extracts from <a href="https://www.distributed-systems.net/index.php/books/ds3/ds3-sneak-preview/">textbook</a> and from slides. This notes are for me to review the materials and for you if you are looking to review some concepts.</p>
 </blockquote>
+<h1 id="lecture-7-remote-method-invocation">Lecture 7 Remote Method Invocation</h1>
+<h2 id="lightweight-rpc">Lightweight RPC</h2>
+<p>We don&rsquo;t need to create RPC to send request to another process on the same physical server -&gt; lightweight RPC. The optimization is to construct the message as a buffer and simply write to the shared memory region:</p>
+<ul>
+<li>No need for marshalling</li>
+<li>Get rid of explicit message passing completely. Rather shared memory is used as a way of communication</li>
+<li>Stub uses run-time flag to decide whether to use TCP/IP or shared memory</li>
+<li>No XDR needed</li>
+</ul>
+<h2 id="other-types-of-rpc">Other types of RPC</h2>
+<p><strong>Asynchronous RPC:</strong></p>
+<ul>
+<li>Client is not blocked after making an RPC call: it sends the request, waits for an acknowledgement then resumes its own execution</li>
+<li>Request reply behavior often not needed</li>
+<li>Server can reply as soon as request is received and execute procedure later</li>
+</ul>
+<p><strong>Deferred Synchronous RPC:</strong></p>
+<ul>
+<li>Same as Asynchronous RPC, but the server returns the result by via an asynchronous RPC.</li>
+<li>The difference with this and asynchronous RPC is that the results is sent back via asynchronous RPC, so the client just need to send an acks to the server after receiving the results.</li>
+</ul>
+<p><strong>One way RPC:</strong></p>
+<ul>
+<li>Same as Asynchronous RPC, different in that client doesn&rsquo;t even wait for an ACK from server</li>
+<li>Limitation: doesn&rsquo;t guarantee reliability</li>
+</ul>
+<h2 id="remote-method-invocation">Remote Method Invocation</h2>
+<p>RMIs are RPCs in Object Oriented Programming Mode, i.e., they can call the methods of the objects (instances of a class) which are residing on a remote machine.</p>
+<p>RMIs support system-wide object references, i.e., parameters can be passed as object references here, which is not possible in normal RPC.</p>
+<blockquote>
+<p>Q: What is binding?</p>
+<p>A: A Process in which a client links to server that have implementation for the process.</p>
+</blockquote>
+<p>When a client binds to a distributed object, the client stub (proxy) loads the interfaces into the client address space.</p>
+<p><img src="/images/RMI_Binding.png" alt="Binding"></p>
+<p>(a) Implicit binding uses just global references, and it is figured out on run-time that it is a remote call (by the client stub)</p>
+<p>(b) Explicit Binding uses both global and local reference. Client explicitly calls a bind function before invoking the methods.</p>
+<h3 id="parameter-passing">Parameter Passing</h3>
+<p>Passing a reference to an object means passing a pointer to its memory address over the network. Local objects are passed by value, and remote objects are passed by reference.</p>
+<p>Java supports monitors, which are synchronized objects.</p>
+<p>For synchronization, lock has to be applied on object which is distributed amongst the clients. How to implement distributed lock?</p>
+<ul>
+<li>Lock at the server: clients will make requests to the server, where they will contend for the lock and will be blocked. Problem: what if the client crashes while blocked?</li>
+<li>Lock at the client (proxy) collectively: need some protocol which decides which client will get the lock and the rest will be blocked (waiting for the lock).</li>
+<li>Java uses proxies for locking: No protection for simultaneous access from different clients, applications need to implement distributed locking.</li>
+</ul>
+<blockquote>
+<p>Reference: <a href="https://docs.oracle.com/javase/7/docs/technotes/guides/rmi/hello/hello-world.html">Hello World Java RMI</a></p>
+</blockquote>
+<blockquote>
+<p>Reference: <a href="https://stackoverflow.com/questions/3507253/java-rmi-and-synchronized-methods">Concurrency in Java RMI</a></p>
+</blockquote>
+<h2 id="message-passing-interface-mpi">Message Passing Interface (MPI)</h2>
+<p>MPI is a higher level programming abstraction than sockets.</p>
+<p><strong>Question:</strong> Suppose that you want to implement a client-server system. There are multiple clients and one server. The server is stateful and the state is updated based on the requests from the clients. A simple example would be a server that stores a counter that is incremented every time any client sends a request. Consider the RPC and RMI mechanisms. Assume that remote procedures/objects cannot to store state outside of the procedure/object itself (for example, they do not have access to the file system of the server).</p>
+<p>(a) Can you use RPC to implement the system? Why or why not?</p>
+<p>(b) Can you use RMI to implement the system? Why or why not?</p>
+<p><strong>Answer:</strong></p>
+<p>(a) No. Regular RPCs cannot be used to implement stateful servers without access to the file system. Remote procedures cannot use global variables so they can only operate on constants and the input parameters provided by the clients. The server will not be able to keep a counter across requests from different clients.</p>
+<p>(b) Yes. RMI can be used to implement the system. Client can invoke on the remote object to increment the counter.</p>
 <h1 id="lecture-8-persistency-message-queueing-system-and-streaming">Lecture 8: Persistency, Message Queueing System and Streaming</h1>
 <h2 id="persistence-and-synchronicity">Persistence and Synchronicity</h2>
 <p><strong>Persistency:</strong> messages are stored until receivers are ready.
@@ -465,6 +542,17 @@ The original algorithm uses Lamport’s logical clocks (LLCs in the following). 
     <div id="toc-footer" style="display: none">
       <nav id="TableOfContents">
   <ul>
+    <li><a href="#lightweight-rpc">Lightweight RPC</a></li>
+    <li><a href="#other-types-of-rpc">Other types of RPC</a></li>
+    <li><a href="#remote-method-invocation">Remote Method Invocation</a>
+      <ul>
+        <li><a href="#parameter-passing">Parameter Passing</a></li>
+      </ul>
+    </li>
+    <li><a href="#message-passing-interface-mpi">Message Passing Interface (MPI)</a></li>
+  </ul>
+
+  <ul>
     <li><a href="#persistence-and-synchronicity">Persistence and Synchronicity</a></li>
     <li><a href="#message-queueing-system">Message Queueing System</a></li>
     <li><a href="#stream-oriented-communication">Stream Oriented Communication</a>
@@ -551,7 +639,7 @@ The original algorithm uses Lamport’s logical clocks (LLCs in the following). 
     </a>
   </li>
   <li>
-    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fhoang-ho.github.io%2fposts%2fdistributedsystemnotes_2%2f&name=%28Notes%202%29%20CompSci%20677%20Distributed%20System%20-%20Editting&description=Disclaimer%3a%20This%20is%20my%20personal%20class%20notes%20for%20Distributed%20Operating%20System%20course%20taught%20at%20UMass%20Amherst.%20All%20images%20are%20taken%20from%20the%20free%20version%20of%20textbook%20and%20from%20slides.%20Notes%20contains%20extracts%20from%20textbook%20and%20from%20slides.%20This%20notes%20are%20for%20me%20to%20review%20the%20materials%20and%20for%20you%20if%20you%20are%20looking%20to%20review%20some%20concepts.%0a%20Lecture%208%3a%20Persistency%2c%20Message%20Queueing%20System%20and%20Streaming%20Persistence%20and%20Synchronicity%20Persistency%3a%20messages%20are%20stored%20until%20receivers%20are%20ready.">
+    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fhoang-ho.github.io%2fposts%2fdistributedsystemnotes_2%2f&name=%28Notes%202%29%20CompSci%20677%20Distributed%20System%20-%20Editting&description=Disclaimer%3a%20This%20is%20my%20personal%20class%20notes%20for%20Distributed%20Operating%20System%20course%20taught%20at%20UMass%20Amherst.%20All%20images%20are%20taken%20from%20the%20free%20version%20of%20textbook%20and%20from%20slides.%20Notes%20contains%20extracts%20from%20textbook%20and%20from%20slides.%20This%20notes%20are%20for%20me%20to%20review%20the%20materials%20and%20for%20you%20if%20you%20are%20looking%20to%20review%20some%20concepts.%0a%20Lecture%207%20Remote%20Method%20Invocation%20Lightweight%20RPC%20We%20don%26rsquo%3bt%20need%20to%20create%20RPC%20to%20send%20request%20to%20another%20process%20on%20the%20same%20physical%20server%20-%26gt%3b%20lightweight%20RPC.">
       <i class="fab fa-tumblr fa-lg" aria-hidden="true"></i>
     </a>
   </li>

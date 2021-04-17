@@ -7,15 +7,25 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Zeran Wu</copyright>
-    <lastBuildDate>Fri, 19 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://hoang-ho.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 08 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://hoang-ho.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>(Notes 3) CompSci 677 Distributed System - Editting</title>
+      <link>https://hoang-ho.github.io/posts/distributedsystemnotes_3/</link>
+      <pubDate>Thu, 08 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://hoang-ho.github.io/posts/distributedsystemnotes_3/</guid>
+      <description>Disclaimer: This is my personal class notes for Distributed Operating System course taught at UMass Amherst. All images are taken from the free version of textbook and from slides. Notes contains extracts from textbook and from slides. This notes are for me to review the materials and for you if you are looking to review some concepts.
+ Lecture 12: Leader Election and Distributed Mutual Exclusion Problem: Many tasks in the distributed system require one of the processes to act as a coordinator or a master.</description>
+    </item>
+    
     <item>
       <title>(Notes 2) CompSci 677 Distributed System - Editting</title>
       <link>https://hoang-ho.github.io/posts/distributedsystemnotes_2/</link>
-      <pubDate>Fri, 19 Mar 2021 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 26 Mar 2021 00:00:00 +0000</pubDate>
       
       <guid>https://hoang-ho.github.io/posts/distributedsystemnotes_2/</guid>
       <description>Disclaimer: This is my personal class notes for Distributed Operating System course taught at UMass Amherst. All images are taken from the free version of textbook and from slides. Notes contains extracts from textbook and from slides. This notes are for me to review the materials and for you if you are looking to review some concepts.
- Lecture 8: Persistency, Message Queueing System and Streaming Persistence and Synchronicity Persistency: messages are stored until receivers are ready.</description>
+ Lecture 7 Remote Method Invocation Lightweight RPC We don&amp;rsquo;t need to create RPC to send request to another process on the same physical server -&amp;gt; lightweight RPC.</description>
     </item>
     
     <item>
